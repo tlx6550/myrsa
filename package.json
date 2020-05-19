@@ -1,0 +1,9 @@
+{
+  "name": "heliferas",
+  "version": "1.0.0",
+  "author": "lzr",
+  "private": true,
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  }
+ }

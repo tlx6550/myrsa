@@ -1,9 +1,22 @@
 {
-  "name": "heliferas",
+  "name": "rsa",
   "version": "1.0.0",
+  "description": "rsa加密方法-与后台协商一致",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlx6550/myrsa.git"
+  },
+  "keywords": [
+    "rsa"
+  ],
   "author": "lzr",
-  "private": true,
-  "dependencies": {
-    "crypto-js": "^3.1.9-1"
-  }
- }
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tlx6550/myrsa/issues"
+  },
+  "homepage": "https://github.com/tlx6550/myrsa#readme"
+}

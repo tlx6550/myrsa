@@ -591,6 +591,35 @@ class Myencryption{
     /**
      * 
      * 
+     * @memberof Myencryption aes解密 不带偏移量的
+     */
+    aesDecrypt(str,aesKey){
+        var key = CryptoJS.enc.Utf8.parse(aesKey)
+        var decrypt = CryptoJS.AES.decrypt(str, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7})
+        var dd =  CryptoJS.enc.Utf8.stringify(decrypt).toString()
+        return dd
+    }
+    /**
+     * 
+     * 
+     * @memberof Myencryption aes解密 带偏移量的
+     */
+    aesDecryptWidthIv(word,aesKey,myiv){
+        var key  = aesKey
+        var iv   =  myiv //此偏移量是后台通过某个方法获取到的，需要和后台解析确认
+        key  = CryptoJS.enc.Utf8.parse(key)
+        iv   = CryptoJS.enc.Utf8.parse(iv)
+        var decrypted = CryptoJS.AES.decrypt(word,key,
+            {
+                iv:iv,
+                mode:CryptoJS.mode.CBC,
+                padding:CryptoJS.pad.Pkcs7
+            })
+        return decrypted.toString(CryptoJS.enc.Utf8)
+    }
+    /**
+     * 
+     * 
      * @memberof Myencryption 获取非对称加密向量keys
      */
     getRasKes(data){
@@ -600,7 +629,7 @@ class Myencryption{
     }
     /**
      * 
-     * 
+     * 非对称
      * @param {any} data 待加密字符
      * @param {any} keys 非对称加密向量keys
      * @returns 加密字符

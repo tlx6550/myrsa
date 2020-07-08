@@ -1,4 +1,5 @@
 const CryptoJS = require('crypto-js')  //引用AES源码j
+console.log(1)
 /*
 * BigInt, a suite of routines for performing multiple-precision arithmetic in
 * JavaScript.

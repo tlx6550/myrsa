@@ -1,5 +1,4 @@
 const CryptoJS = require('crypto-js')  //引用AES源码j
-console.log(1)
 /*
 * BigInt, a suite of routines for performing multiple-precision arithmetic in
 * JavaScript.
@@ -588,6 +587,39 @@ class Myencryption{
         var srcs = CryptoJS.enc.Utf8.parse(word)
         var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7})
         return encrypted.toString()
+    }
+    //以下128位aes加密方法引用https://blog.csdn.net/weixin_34414650/article/details/88993285
+    _fillKey(key,keySize = 128){
+        const filledKey = Buffer.alloc(keySize / 8)
+        const keys = Buffer.from(key)
+        if (keys.length < filledKey.length) {
+            filledKey.map((b, i) => filledKey[i] = keys[i])
+        }
+       
+        return filledKey
+    }
+    aesEncrypt128(word,key){
+        // 获取填充后的key
+        const initKey = this._fillKey(key)
+        const aeskey = CryptoJS.enc.Utf8.parse(initKey)
+        /**
+     * CipherOption, 加密的一些选项:
+     *   mode: 加密模式, 可取值(CBC, CFB, CTR, CTRGladman, OFB, ECB), 都在 CryptoJS.mode 对象下
+     *   padding: 填充方式, 可取值(Pkcs7, AnsiX923, Iso10126, Iso97971, ZeroPadding, NoPadding), 都在 CryptoJS.pad 对象下
+     *   iv: 偏移量, mode === ECB 时, 不需要 iv
+     * 返回的是一个加密对象
+   */
+        const cipher = CryptoJS.AES.encrypt(word, aeskey, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7,
+            iv: '',
+        })
+        // 将加密后的数据转换成 Base64
+        const base64Cipher = cipher.ciphertext.toString(CryptoJS.enc.Base64)
+        // // 处理 Android 某些低版的BUG 按实际需求定暂屏蔽
+        // const resultCipher = base64Cipher.replace(/\+/g,'-').replace(/\//g,'_')
+        // 返回加密后的经过处理的 Base64
+        return base64Cipher
     }
     /**
      * 
